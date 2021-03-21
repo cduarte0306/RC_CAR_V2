@@ -25,9 +25,14 @@
 #define REQ_LED             (1u)
 #define REQ_CHARGER         (2u)
 #define REQ_ACCELEROMETER   (3u)
-    
-#define BUFF_LEN            (10u)  // Maximum buffer length of 80 Bytes (20 words)
+
+/* IDs */
+#define CHARGER_ID          (1u)
+#define LED_ID              (2u)
+#define ACCELEROMETER_ID    (3u)
+
 #define NUM_REQUESTS        (3u)   // Number of request IDs
+#define BUFF_LEN            (10u)  // Maximum buffer length of 80 Bytes (20 words)
 
     
 typedef struct __attribute__((__packed__))  /* Defining incoming data structure   */
@@ -39,8 +44,7 @@ typedef struct __attribute__((__packed__))  /* Defining incoming data structure 
     uint8 rd_len;
 } i2c_requests_t;
 
-uint8 request_buffer[NUM_REQUESTS + 1u];
-i2c_requests_t i2c_requests[NUM_REQUESTS + 1u];
+i2c_requests_t i2c_parameters[NUM_REQUESTS + 1u];
 
 void i2c_process(void);
 void queue_req(uint8 field);
