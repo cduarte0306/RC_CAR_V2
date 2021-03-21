@@ -1,0 +1,39 @@
+--------------- Build Started: 03/20/2021 20:46:38 Project: RC_Car_V2_FreeRTOS, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+Initializing Build...
+The code generation step is up to date.
+Pre-build Steps...
+Compiling...
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/i2c_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c i2c_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\i2c_ctrl.o
+i2c_ctrl.c: In function 'dequeue':
+i2c_ctrl.c:80:17: warning: operation on 'queue_index' may be undefined [-Wsequence-point]
+     queue_index = queue_index < 0 ? 0 : queue_index --;  // Decrease index
+                 ^
+i2c_ctrl.c: At top level:
+i2c_ctrl.c:27:13: warning: 'process_queue' used but never defined
+ static void process_queue(void);
+             ^
+i2c_ctrl.c:31:13: warning: 'i2c_buffer_read' defined but not used [-Wunused-function]
+ static void i2c_buffer_read(uint8 slave_addr, uint8* wr_buff, uint8 wr_size, uint8* read_buffer, uint8 read_size )
+             ^
+i2c_ctrl.c:48:13: warning: 'i2c_buffer_write' defined but not used [-Wunused-function]
+ static void i2c_buffer_write(uint8 slave_addr, uint8 *wr_buff, uint8 num_bytes)
+             ^
+i2c_ctrl.c:77:13: warning: 'dequeue' defined but not used [-Wunused-function]
+ static void dequeue(void)
+             ^
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/led_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c led_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\led_ctrl.o
+led_ctrl.c: In function 'led_sel':
+led_ctrl.c:84:19: warning: unused variable 'stat' [-Wunused-variable]
+             uint8 stat = I2C_MasterStatus();
+                   ^
+arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/charge_meter_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c charge_meter_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\charge_meter_ctrl.o
+Linking...
+arm-none-eabi-ar.exe -rs .\CortexM3\ARM_GCC_541\Debug\RC_Car_V2_FreeRTOS.a .\CortexM3\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM3\ARM_GCC_541\Debug\CyDmac.o .\CortexM3\ARM_GCC_541\Debug\CyFlash.o .\CortexM3\ARM_GCC_541\Debug\CyLib.o .\CortexM3\ARM_GCC_541\Debug\cyPm.o .\CortexM3\ARM_GCC_541\Debug\CySpc.o .\CortexM3\ARM_GCC_541\Debug\cyutils.o .\CortexM3\ARM_GCC_541\Debug\rx_isr.o .\CortexM3\ARM_GCC_541\Debug\tx_gps.o .\CortexM3\ARM_GCC_541\Debug\UART_Radio.o .\CortexM3\ARM_GCC_541\Debug\UART_Radio_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_Radio_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_Radio_BOOT.o .\CortexM3\ARM_GCC_541\Debug\I2C.o .\CortexM3\ARM_GCC_541\Debug\I2C_BOOT.o .\CortexM3\ARM_GCC_541\Debug\I2C_INT.o .\CortexM3\ARM_GCC_541\Debug\I2C_PM.o .\CortexM3\ARM_GCC_541\Debug\I2C_SLAVE.o .\CortexM3\ARM_GCC_541\Debug\I2C_MASTER.o .\CortexM3\ARM_GCC_541\Debug\sda.o .\CortexM3\ARM_GCC_541\Debug\scl.o .\CortexM3\ARM_GCC_541\Debug\UART_GPS.o .\CortexM3\ARM_GCC_541\Debug\UART_GPS_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_GPS_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_GPS_BOOT.o .\CortexM3\ARM_GCC_541\Debug\tx_jetson.o .\CortexM3\ARM_GCC_541\Debug\VREF.o .\CortexM3\ARM_GCC_541\Debug\VREF_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_Jetson.o .\CortexM3\ARM_GCC_541\Debug\UART_Jetson_PM.o .\CortexM3\ARM_GCC_541\Debug\UART_Jetson_INT.o .\CortexM3\ARM_GCC_541\Debug\UART_Jetson_BOOT.o .\CortexM3\ARM_GCC_541\Debug\tx_radio.o .\CortexM3\ARM_GCC_541\Debug\speed.o .\CortexM3\ARM_GCC_541\Debug\Clock_1.o .\CortexM3\ARM_GCC_541\Debug\PWM_Motor.o .\CortexM3\ARM_GCC_541\Debug\PWM_Motor_PM.o .\CortexM3\ARM_GCC_541\Debug\PWM_trigger.o .\CortexM3\ARM_GCC_541\Debug\PWM_trigger_PM.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_3.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_3_PM.o .\CortexM3\ARM_GCC_541\Debug\PWM_Servo.o .\CortexM3\ARM_GCC_541\Debug\PWM_Servo_PM.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_1.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_1_PM.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_2.o .\CortexM3\ARM_GCC_541\Debug\Timer_echo_2_PM.o .\CortexM3\ARM_GCC_541\Debug\Clock_2.o .\CortexM3\ARM_GCC_541\Debug\echo_1.o .\CortexM3\ARM_GCC_541\Debug\echo_2.o .\CortexM3\ARM_GCC_541\Debug\echo_3.o .\CortexM3\ARM_GCC_541\Debug\forward.o .\CortexM3\ARM_GCC_541\Debug\reverse.o .\CortexM3\ARM_GCC_541\Debug\servo.o .\CortexM3\ARM_GCC_541\Debug\speed_in.o .\CortexM3\ARM_GCC_541\Debug\trigger.o .\CortexM3\ARM_GCC_541\Debug\UART_Jetson_IntClock.o .\CortexM3\ARM_GCC_541\Debug\Clock_3.o .\CortexM3\ARM_GCC_541\Debug\trigger_reset.o .\CortexM3\ARM_GCC_541\Debug\trigger_reset_PM.o .\CortexM3\ARM_GCC_541\Debug\gps_isr.o .\CortexM3\ARM_GCC_541\Debug\EEPROM.o .\CortexM3\ARM_GCC_541\Debug\Alert.o .\CortexM3\ARM_GCC_541\Debug\alert_isr.o .\CortexM3\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe: creating .\CortexM3\ARM_GCC_541\Debug\RC_Car_V2_FreeRTOS.a
+arm-none-eabi-gcc.exe -Wl,--start-group -o "C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn\CortexM3\ARM_GCC_541\Debug\RC_Car_V2_FreeRTOS.elf" .\CortexM3\ARM_GCC_541\Debug\main.o .\CortexM3\ARM_GCC_541\Debug\FreeRTOS.o .\CortexM3\ARM_GCC_541\Debug\uart_ctrl.o .\CortexM3\ARM_GCC_541\Debug\rc_car.o .\CortexM3\ARM_GCC_541\Debug\pid_ctrl.o .\CortexM3\ARM_GCC_541\Debug\i2c_ctrl.o .\CortexM3\ARM_GCC_541\Debug\led_ctrl.o .\CortexM3\ARM_GCC_541\Debug\ultrasonic_ctrl.o .\CortexM3\ARM_GCC_541\Debug\charge_meter_ctrl.o .\CortexM3\ARM_GCC_541\Debug\motor.o .\CortexM3\ARM_GCC_541\Debug\gps_ctrl.o .\CortexM3\ARM_GCC_541\Debug\eeprom_ctrl.o .\CortexM3\ARM_GCC_541\Debug\jetson.o .\CortexM3\ARM_GCC_541\Debug\port.o .\CortexM3\ARM_GCC_541\Debug\heap_1.o .\CortexM3\ARM_GCC_541\Debug\croutine.o .\CortexM3\ARM_GCC_541\Debug\event_groups.o .\CortexM3\ARM_GCC_541\Debug\list.o .\CortexM3\ARM_GCC_541\Debug\queue.o .\CortexM3\ARM_GCC_541\Debug\stream_buffer.o .\CortexM3\ARM_GCC_541\Debug\tasks.o .\CortexM3\ARM_GCC_541\Debug\timers.o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM3\ARM_GCC_541\Debug\cymetadata.o .\CortexM3\ARM_GCC_541\Debug\Cm3Start.o .\CortexM3\ARM_GCC_541\Debug\RC_Car_V2_FreeRTOS.a "C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CortexM3\ARM_GCC_541\Debug\CyComponentLibrary.a" -mcpu=cortex-m3 -mthumb -l m -L Generated_Source\PSoC5 -Wl,-Map,.\CortexM3\ARM_GCC_541\Debug/RC_Car_V2_FreeRTOS.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -u _printf_float -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
+.\CortexM3\ARM_GCC_541\Debug\i2c_ctrl.o: In function `i2c_process':
+C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn/i2c_ctrl.c:72: undefined reference to `process_queue'
+collect2.exe: error: ld returned 1 exit status
+The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
+--------------- Build Failed: 03/20/2021 20:46:40 ---------------
