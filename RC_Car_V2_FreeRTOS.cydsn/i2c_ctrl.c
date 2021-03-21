@@ -28,31 +28,37 @@ static void process_queue(void);
 
 
 /* Function reads from slave */
-static void i2c_buffer_read(uint8 slave_addr, uint8* wr_buff, uint8 wr_size, uint8* read_buffer, uint8 read_size )
-{
-    /* Wait if there is a trasnfer in progress */
-    while(1u == (I2C_MasterStatus() & I2C_MSTAT_XFER_INP)){};
+// static void i2c_buffer_read(uint8 slave_addr, uint8* wr_buff, uint8 wr_size, uint8* read_buffer, uint8 read_size )
+// {
+//     /* Wait if there is a trasnfer in progress */
+//     while(1u == (I2C_MasterStatus() & I2C_MSTAT_XFER_INP)){};
     
-    /* Write data to slave */
-    I2C_MasterWriteBuf(slave_addr, wr_buff, wr_size, I2C_MODE_NO_STOP);
+//     /* Write data to slave */
+//     I2C_MasterWriteBuf(slave_addr, wr_buff, wr_size, I2C_MODE_NO_STOP);
     
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT)){};
+//     while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT)){};
     
-    I2C_MasterReadBuf(slave_addr, read_buffer, read_size, I2C_MODE_REPEAT_START); /* Returns status of read  */
+//     I2C_MasterReadBuf(slave_addr, read_buffer, read_size, I2C_MODE_REPEAT_START); /* Returns status of read  */
     
-    while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
-}
+//     while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
+// }
 
 
-/* Function writes to slave */
-static void i2c_buffer_write(uint8 slave_addr, uint8 *wr_buff, uint8 num_bytes)
-{
-    /* Wait while I2C is busy */
-    while(1u == (I2C_MSTAT_XFER_INP & I2C_MasterStatus()))
+// /* Function writes to slave */
+// static void i2c_buffer_write(uint8 slave_addr, uint8 *wr_buff, uint8 num_bytes)
+// {
+//     /* Wait while I2C is busy */
+//     while(1u == (I2C_MSTAT_XFER_INP & I2C_MasterStatus()))
 
-    I2C_MasterWriteBuf(slave_addr, wr_buff, num_bytes, I2C_MODE_COMPLETE_XFER);
+//     I2C_MasterWriteBuf(slave_addr, wr_buff, num_bytes, I2C_MODE_COMPLETE_XFER);
             
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+//     while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+// }
+
+
+static void i2c_led_update(void)
+{
+    
 }
 
 
@@ -61,8 +67,16 @@ static void perform_process(uint8 field)
     switch(field)
     {
         case REQ_LED:
+            i2c_led_update();
+            break;
+        
+        case REQ_CHARGER:
+            i2c_charger_update();
+            break;
 
-
+        case REQ_ACCELEROMETER:
+            i2c_accelerometer_update();
+            break;
     }
 }
 
