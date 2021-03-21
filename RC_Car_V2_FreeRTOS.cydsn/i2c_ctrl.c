@@ -58,7 +58,11 @@ static void i2c_buffer_write(uint8 slave_addr, uint8 *wr_buff, uint8 num_bytes)
 
 static void perform_process(uint8 field)
 {
-
+    switch(field)
+    {
+        case:
+            
+    }
 }
 
 
