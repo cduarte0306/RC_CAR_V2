@@ -15,13 +15,90 @@
 #include "utilities.h"
 #include "i2c_ctrl.h"
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
 
 #define WR_BUFF_SIZE    (2u)
 #define CMD_SIZE        (6)
 
 
-uint8 led_buffer[WR_BUFF_SIZE] = {0, 0};
+/* LED request queue setup */
+typedef struct node
+{
+    uint8 value;
+    struct node *next;
+} node;
 
+
+typedef struct
+{
+    node* head;
+    node* tail;
+} queue;
+
+i2c_parameters_t led_i2c_param = &i2c_parameters[LED_ID];
+
+
+static void init_queue(queue *q)
+{
+    q -> head = NULL;
+    q -> tail = NULL;
+}
+
+
+static bool enqueue(queue *q, uint8 value)
+{
+    /* Allocate memory for new node */
+    node* newnode = malloc(sizeof(node));
+
+    if(newnode == NULL)
+
+        return FALSE;
+    newnode -> value = value;
+
+    /* The next points to NULL since the new value goes to the end of 
+       the list and it will not have anything after */
+    newnode -> value = NULL;
+
+    if(q ->tail != NULL)
+    {
+        q -> tail -> next = newnode;
+    }
+
+    q -> tail = newnode;
+
+    /* If this is the first value, the head will also be equal to the new node */
+    if(q -> head == NULL)
+    {
+        q -> head = newnode;
+    }
+
+    return TRUE;
+}
+
+
+static uint8 dequeue(queue* q)
+{
+    /* If there are no values left in the queue, return */
+    if(q -> head == NULL)
+        return FALSE;
+
+    node *tmp = q -> head;
+    int result = tmp -> value;
+
+    /* Pop off */
+    q -> head = q -> head -> next;
+    if(q -> head == NULL)
+    {
+        q -> tail = NULL;
+    }
+
+    free(tmp);
+    return result;
+
+}
 
 /* Setup the led peripheral */
 void led_setup( void )
@@ -52,7 +129,7 @@ void led_setup( void )
 }
 
 
-void led_sel(uint8 led, uint8 status)
+static void led_sel(uint8 led, uint8 status)
 {
     switch(led)
     {        
@@ -60,45 +137,13 @@ void led_sel(uint8 led, uint8 status)
             break;
        
         case LED_GREEN_1: 
-            if(last_green == status)
-                return;
-            
-            last_green = status;
-            
-            if(status == TRUE)
-            {
-            led_buffer[0]=LED_GREEN_1_ADDR;
-            led_buffer[1]=FULL_SCALE;   
-            }
-            else 
-            {
-                led_buffer[0]=LED_GREEN_1_ADDR;
-                led_buffer[1]=OFF;  
-            }
-            
             I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
             uint8 stat = I2C_MasterStatus();
             while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
             
             break;
         
-        case LED_YELLOW:
-            if(last_yellow == status)
-                break;
-            
-            last_yellow = status;
-            
-            if(status == TRUE)
-            {
-                led_buffer[0]=LED_YELLOW_ADDR;
-                led_buffer[1]=FULL_SCALE;         
-            }
-            else 
-            {
-                led_buffer[0] = LED_YELLOW_ADDR;
-                led_buffer[1] = OFF;
-            }
-            
+        case LED_YELLOW:            
             I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
             
             while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
@@ -106,22 +151,6 @@ void led_sel(uint8 led, uint8 status)
             break;
         
         case LED_RED:    
-            if(last_red == status)
-                return;
-            
-            last_red = status;
-            
-            if(status == TRUE)
-            {
-            led_buffer[0]=LED_RED_ADDR;
-            led_buffer[1]=FULL_SCALE;   
-            }
-            else 
-            {
-                led_buffer[0]=LED_RED_ADDR;
-                led_buffer[1]=OFF;  
-            }         
-            
             I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
             
             while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
@@ -129,23 +158,6 @@ void led_sel(uint8 led, uint8 status)
             break;
         
         case LED_BLUE: 
-            
-            if(last_blue_1 == status)
-                break;
-            
-            last_blue_1 = status;
-            
-            if(status == TRUE)
-            {
-            led_buffer[0]=LED_BLUE_ADDR;
-            led_buffer[1]=FULL_SCALE;   
-            }
-            else 
-            {
-                led_buffer[0]=LED_BLUE_ADDR;
-                led_buffer[1]=OFF;  
-            }
-            
             I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
             
             while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
@@ -153,22 +165,6 @@ void led_sel(uint8 led, uint8 status)
             break;
             
         case LED_GREEN_2:
-            if(last_blue_2 == status)
-                break;
-            
-            last_blue_2 = status;
-                        
-            if(status == TRUE)
-            {
-                led_buffer[0]=LED_GREEN_2_ADDR;
-                led_buffer[1]=FULL_SCALE;            
-            }
-            else
-            {
-                led_buffer[0]=LED_GREEN_2_ADDR;
-                led_buffer[1]=OFF;
-            }
-            
             I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
             
             while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
@@ -177,6 +173,11 @@ void led_sel(uint8 led, uint8 status)
     }
     
     I2C_MasterClearStatus();
+}
+
+
+void led_process(void)
+{
 }
 
 /* [] END OF FILE */
