@@ -17,47 +17,43 @@
 
 
 #define WR_BUFF_SIZE    (2u)
+#define CMD_SIZE        (6)
 
 
 uint8 led_buffer[WR_BUFF_SIZE] = {0, 0};
 
+
+/* Setup the led peripheral */
 void led_setup( void )
 {
-    led_buffer[0]=0x00;
-    led_buffer[1]=0x00;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0]=0x0c;
-    led_buffer[1]=0xFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0]=0x0d;
-    led_buffer[1]=0xFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0] = LED_YELLOW_ADDR;
-    led_buffer[1] = OFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-            
-    while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    uint8 setup_commands[CMD_SIZE] = 
+    {
+        0x00, 0x00,
+        0x0C, 0xFF,
+        0x0D, 0xFF
+    };
+    uint8 wr_buff[WR_BUFF_SIZE];
+
+    uint8 index = 0;
+
+    for(uint8 i = 0; i < sizeof(setup_commands); i ++)
+    {
+        index ++;
+        if(index != 2)
+            continue;
+
+        index = 0;
+        wr_buff[0] = setup_commands[i - 1];
+        wr_buff[1] = setup_commands[i];
+
+        I2C_MasterWriteBuf(LED_ADDR, led_buffer, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
+        while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    }
 }
 
 
 void led_sel(uint8 led, uint8 status)
 {
-    static uint8 last_green;
-    static uint8 last_yellow;
-    static uint8 last_red;
-    static uint8 last_blue_1;
-    static uint8 last_blue_2;
-    
     switch(led)
     {        
         case NO_COM:

@@ -46,7 +46,7 @@ static void i2c_charger_update(void)
     
     /* Write data to slave */
     I2C_MasterWriteBuf( i2c_parameters[CHARGER_ID].device_addr, 
-                        i2c_parameters[CHARGER_ID].wr_buf, 
+                        i2c_parameters[CHARGER_ID].wr_buff, 
                         i2c_parameters[CHARGER_ID].wr_len, 
                         I2C_MODE_NO_STOP
     );
@@ -54,7 +54,7 @@ static void i2c_charger_update(void)
     while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT)){};
     
     /* Read incoming data from charger monitor */
-    I2C_MasterReadBuf( i2c_parameters[CHARGER_ID].slave_addr,
+    I2C_MasterReadBuf( i2c_parameters[CHARGER_ID].device_addr,
                        i2c_parameters[CHARGER_ID].rd_buff,
                        i2c_parameters[CHARGER_ID].rd_len,
                        I2C_MODE_REPEAT_START);

@@ -26,15 +26,12 @@
 
 
 /* Sets up pointers to charger i2c index */ 
-i2c_requests_t* charger_requests = &i2c_requests[CHARGER_ID];
+i2c_requests_t* charger_requests = &i2c_parameters[CHARGER_ID];
 
 
 void charge_meter_setup(void)
 {
-    uint8 chgr_wr_buf[WR_BUF_SIZE] = {CMD_DATA};
-    
-    request_buffer[CHARGER_ID] = FALSE;
-    
+    uint8 chgr_wr_buf[WR_BUF_SIZE] = {CMD_DATA};    
     charger_requests->device_addr = CHARGER_ADDR;
     memcpy(charger_requests->wr_buff, chgr_wr_buf, sizeof(chgr_wr_buf));  // Sets the write buffer
     charger_requests->wr_len = sizeof(chgr_wr_buf);  // Sets the write length 
@@ -60,10 +57,7 @@ static uint8 i2c_cheksum_calc(meter_data_t *buffer)
 
 
 static void battery_monitor_read(void)
-{    
-    if(request_buffer[CHARGER_ID] == TRUE)
-        return;
-    
+{      
     memcpy(&i2c_meter_data, charger_requests->rd_buff, sizeof(i2c_meter_data_t));
     uint8 checksum_status = i2c_cheksum_calc(&i2c_meter_data.charge_data);
 
@@ -71,7 +65,6 @@ static void battery_monitor_read(void)
         tx_data.charge_level = i2c_meter_data.charge_data.charge_level;
     
     /* Set the buffer to request data */
-    request_buffer[CHARGER_ID] = TRUE;
 }
 
 
