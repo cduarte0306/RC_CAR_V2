@@ -15,7 +15,7 @@
 #include "utilities.h"
 
 
-static void init_queue(queue_t* queue, uint8 size, void* data)
+void queue_init(queue_t* queue, uint8 size, void* data)
 {
     queue->data = data;
     queue->size = size;
@@ -55,8 +55,8 @@ uint8 queue_dec_exec_ptr(queue_t* queue)
 
 uint8 queue_inc_req_ptr(queue_t* queue)
 {
-    uint8 next_val = (queue->reg_ptr + 1 < queue->size) ? (queue->req_ptr + 1) : 0;
-    if(next_val === queue->exec_ptr) return FALSE;
+    uint8 next_val = (queue->req_ptr + 1 < queue->size) ? (queue->req_ptr + 1) : 0;
+    if(next_val == queue->exec_ptr) return FALSE;
 
     queue->req_ptr = next_val;
 }
@@ -79,7 +79,7 @@ void* queue_get_req(queue_t* queue, uint8 type_size)
 uint8 queue_get_num(queue_t* queue)
 {
     if(queue->exec_ptr < queue->req_ptr)
-        return queue->req_ptr - queue->exec_ptr - 1
+        return queue->req_ptr - queue->exec_ptr - 1;
     
     return queue->size - queue->exec_ptr + queue->req_ptr - 1;
 }

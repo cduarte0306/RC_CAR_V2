@@ -75,21 +75,21 @@ void battery_monitor_process(void)
     /* Light the corresponding LED based on the battery voltage level */
     if(tx_data.charge_level >= HIGH_TH)
     {
-        led_sel(LED_GREEN_1, TRUE);
-        led_sel(LED_YELLOW, FALSE);
-        led_sel(LED_RED, FALSE);
+        led_add_queue(LED_GREEN_1, TRUE);
+        led_add_queue(LED_YELLOW, FALSE);
+        led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level >= LOW_TH && tx_data.charge_level < HIGH_TH)
     {
-        led_sel(LED_GREEN_1, FALSE);
-        led_sel(LED_YELLOW, TRUE);
-        led_sel(LED_RED, FALSE);
+        led_add_queue(LED_GREEN_1, FALSE);
+        led_add_queue(LED_YELLOW, TRUE);
+        led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level < LOW_TH)
     {
-        led_sel(LED_GREEN_1, FALSE);
-        led_sel(LED_YELLOW, FALSE);
-        led_sel(LED_RED, TRUE);
+        led_add_queue(LED_GREEN_1, FALSE);
+        led_add_queue(LED_YELLOW, FALSE);
+        led_add_queue(LED_RED, TRUE);
     }
 }
 

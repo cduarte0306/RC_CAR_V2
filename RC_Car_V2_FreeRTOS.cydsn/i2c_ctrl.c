@@ -13,18 +13,19 @@
 #include "project.h"
 #include "i2c_ctrl.h"
 #include "utilities.h"
+#include "queue_ctrl.h"
 
 
 #define REQ_BUFF_SIZE  (10u)
 
 
-/* Define the size of the queue buffer */
-static uint8 queue_buffer[REQ_BUFF_SIZE];
-static uint8 is_queue_empty = FALSE;
-static int8 queue_index = 0;
+typedef struct
+{
+    uint8 field;
+} i2c_req_t;
 
-
-static void process_queue(void);
+i2c_req_t i2c_req[REQ_BUFF_SIZE];
+queue_t i2c_queue;
 
 
 static void i2c_led_update(void)
@@ -76,7 +77,7 @@ static void perform_process(uint8 field)
             break;
 
         case REQ_ACCELEROMETER:
-            i2c_accelerometer_update();
+            //i2c_accelerometer_update();
             break;
 
         default:
@@ -87,29 +88,26 @@ static void perform_process(uint8 field)
 
 /* To be called on main I2C process */
 void i2c_process(void)
-{ 
-    /* Check if there are any requests */
-    if(is_queue_empty)
+{   
+    /* If the queue is empty, then do not enter */
+    if(queue_empty(&i2c_queue))
         return;
 
-    process_queue();
+    /* Pull the next request from the queue */
+    i2c_req_t* i2c_req = (i2c_req_t*)queue_get_exec(&i2c_queue, sizeof(i2c_req_t));
+    perform_process(i2c_req->field);
+
+    queue_inc_exec_ptr(&i2c_queue);
 }
 
 
-/* Process queue requests and empy queue space. Shift index */
-static void dequeue(void)
+/* Submit a request to the queue */
+void i2c_add_queue(uint8 field, uint8 scale)
 {
-    uint8 request = queue_buffer[queue_index];
-    queue_index = queue_index < 0 ? 0 : queue_index - 1;  // Decrease index
-    perform_process(request);
-}
+    i2c_req_t* led_req = (i2c_req_t*)queue_get_req(&i2c_queue, sizeof(i2c_req_t));
+    i2c_req->field = field;
 
-
-/* This fucntion is to be called when submitting a request */
-void queue_req(uint8 field)
-{
-    queue_buffer[queue_index] = field;  // Place the request in the buffer
-    queue_index++;  // Increase queue index for every request
+    queue_inc_req_ptr(&i2c_queue);
 }
 
 /* [] END OF FILE */

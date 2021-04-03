@@ -24,12 +24,13 @@
 #define WR_BUFF_SIZE    (2u)
 #define CMD_SIZE        (6)
 
-#define QUEUE_SIZE      (4u)
+#define QUEUE_SIZE      (10u)
 
 
 typedef struct
 {
     uint8 field;
+    uint8 scale;
 } led_req_t;
 
 led_req_t req_queue[QUEUE_SIZE];
@@ -39,7 +40,7 @@ queue_t led_queue;
 i2c_requests_t* led_i2c_param = &i2c_parameters[LED_ID];
 
 
-static void led_sel(uint8 led)
+static void led_sel(uint8 led, uint8 scale)
 {
     switch(led)
     {        
@@ -47,24 +48,32 @@ static void led_sel(uint8 led)
             break;
        
         case LED_GREEN_1:   
-                      
+            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
+            led_i2c_param->wr_buff[1] = scale;    
+
             break;
         
-        case LED_YELLOW:               
+        case LED_YELLOW:   
+            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
+            led_i2c_param->wr_buff[1] = scale;            
             break;
         
         case LED_RED:
-
+            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
+            led_i2c_param->wr_buff[1] = scale; 
             break;
         
         case LED_BLUE:
-
+            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
+            led_i2c_param->wr_buff[1] = scale; 
             break;
             
         case LED_GREEN_2:
+            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
+            led_i2c_param->wr_buff[1] = scale; 
             break;
 
-        case default:
+        default:
             break;
     }
     
@@ -112,19 +121,20 @@ void led_process(void)
 
     /* Pull the next request from the queue */
     led_req_t* led_req = (led_req_t*)queue_get_exec(&led_queue, sizeof(led_req_t));
-    led_sel(led_req);
+    led_sel(led_req->field, led_req->scale);
 
     queue_inc_exec_ptr(&led_queue);
 }
 
 
 /* Submit a request to the queue */
-void uint8 led_enqueue(uint8 field)
+void led_add_queue(uint8 field, uint8 scale)
 {
-    if(buff.count >= QUEUE_SIZE)
-        return QUEUE_FULL;
+    led_req_t* led_req = (led_req_t*)queue_get_req(&led_queue, sizeof(led_req_t));
+    led_req->field = field;
+    led_req->scale = scale;
 
-    
+    queue_inc_req_ptr(&led_queue);
 }
 
 /* [] END OF FILE */

@@ -109,7 +109,7 @@ static void uart_unpack_data(void)
     {
         memcpy(&rx_data, &uart_buff_data_in.data_in, sizeof(rx_data_t));
         UART_Radio_ClearRxBuffer();
-        led_sel(LED_BLUE, TRUE);
+        led_add_queue(LED_BLUE, TRUE);
     }
     
     packet_ok = FALSE;
@@ -143,7 +143,7 @@ void uart_process(void)
         time_out = 0;
     
     if(time_out > TIMEOUT)
-        led_sel(LED_BLUE, FALSE);    
+        led_add_queue(LED_BLUE, FALSE);    
 }
 
 

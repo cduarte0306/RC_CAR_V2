@@ -80,14 +80,14 @@ void motor_process(void)
     if(rx_data.drive_mode_bits == FALSE)
     {
         motor();
-        led_sel(LED_GREEN_2, FALSE);
+        led_add_queue(LED_GREEN_2, FALSE);
     }
     else
     {
         PWM_Motor_Start();
         PWM_Motor_WriteCompare2(FALSE);
         pid(rx_data.speed_set);
-        led_sel(LED_GREEN_2, TRUE);
+        led_add_queue(LED_GREEN_2, TRUE);
     }
     
     servo();   

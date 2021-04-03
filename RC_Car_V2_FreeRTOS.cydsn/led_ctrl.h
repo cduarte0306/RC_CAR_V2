@@ -35,7 +35,6 @@
 #define QUEUE_FULL      (0x01)
     
 
-void led_sel(uint8 led, uint8 status);
 void led_setup( void );
     
 #endif
