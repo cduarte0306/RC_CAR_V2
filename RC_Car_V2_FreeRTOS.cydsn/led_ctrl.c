@@ -49,29 +49,29 @@ static void led_sel(uint8 led, uint8 scale)
             break;
        
         case LED_GREEN_1:   
-            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
-            led_i2c_param->wr_buff[1] = scale;    
+            led_i2c_param->wr_buff[0] = LED_GREEN_1;
+            led_i2c_param->wr_buff[1] = (scale == TRUE) ? FULL_SCALE : 0;    
 
             break;
         
         case LED_YELLOW:   
-            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
-            led_i2c_param->wr_buff[1] = scale;            
+            led_i2c_param->wr_buff[0] = LED_YELLOW;
+            led_i2c_param->wr_buff[1] = (scale == TRUE) ? FULL_SCALE : 0;            
             break;
         
         case LED_RED:
-            led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
-            led_i2c_param->wr_buff[1] = scale; 
+            led_i2c_param->wr_buff[0] = LED_RED;
+            led_i2c_param->wr_buff[1] = (scale == TRUE) ? FULL_SCALE : 0;
             break;
         
         case LED_BLUE:
             led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
-            led_i2c_param->wr_buff[1] = scale; 
+            led_i2c_param->wr_buff[1] = (scale == TRUE) ? FULL_SCALE : 0;
             break;
             
         case LED_GREEN_2:
             led_i2c_param->wr_buff[0] = LED_GREEN_1_ADDR;
-            led_i2c_param->wr_buff[1] = scale; 
+            led_i2c_param->wr_buff[1] = (scale == TRUE) ? FULL_SCALE : 0;
             break;
 
         default:
