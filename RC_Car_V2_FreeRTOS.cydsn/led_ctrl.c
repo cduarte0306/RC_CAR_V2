@@ -15,6 +15,13 @@
 #include "utilities.h"
 #include "i2c_ctrl.h"
 
+// FreeRTOS libraies
+#include "FreeRTOS.h"
+#include "task.h"
+#include "timers.h"
+#include "queue.h"
+#include "semphr.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -23,109 +30,53 @@
 #define WR_BUFF_SIZE    (2u)
 #define CMD_SIZE        (6)
 
+#define QUEUE_SIZE      (4u)
 
-/* LED request queue setup */
-typedef struct node
-{
-    uint8 value;
-    struct node *next;
-} node;
+
+// /* LED request queue setup */
+// typedef struct node
+// {
+//     uint8 value;
+//     struct node *next;
+// } node;
+
+
+// typedef struct
+// {
+//     node* head;
+//     node* tail;
+// } queue;
 
 
 typedef struct
 {
-    node* head;
-    node* tail;
-} queue;
+    uint8 data*;  // Buffer
+    uint8 count;               // Elements present on the queue
+    uint8* head;               // Pointer to the head of the queue
+    uint8* tail;               // Pointer to the tail of the queue
+} buff_t;
 
-i2c_parameters_t led_i2c_param = &i2c_parameters[LED_ID];
-
-
-static void init_queue(queue *q)
+typedef struct
 {
-    q -> head = NULL;
-    q -> tail = NULL;
-}
+    uint8 field;
+} queue_t;
+
+queue_t queue[QUEUE_SIZE];
+
+/* Set up pointer to the i2c controller buffer */
+i2c_requests_t* led_i2c_param = &i2c_parameters[LED_ID];
+buff_t* buff;
 
 
-static bool enqueue(queue *q, uint8 value)
+static void init_queue(void)
 {
-    /* Allocate memory for new node */
-    node* newnode = malloc(sizeof(node));
+    buff->count = 0;
 
-    if(newnode == NULL)
+    /* Initialize the head and tail pointers. Points to the first element of the array */
+    buff->head = buff->data;
+    buff->tail = buff->data;
 
-        return FALSE;
-    newnode -> value = value;
-
-    /* The next points to NULL since the new value goes to the end of 
-       the list and it will not have anything after */
-    newnode -> value = NULL;
-
-    if(q ->tail != NULL)
-    {
-        q -> tail -> next = newnode;
-    }
-
-    q -> tail = newnode;
-
-    /* If this is the first value, the head will also be equal to the new node */
-    if(q -> head == NULL)
-    {
-        q -> head = newnode;
-    }
-
-    return TRUE;
-}
-
-
-static uint8 dequeue(queue* q)
-{
-    /* If there are no values left in the queue, return */
-    if(q -> head == NULL)
-        return FALSE;
-
-    node *tmp = q -> head;
-    int result = tmp -> value;
-
-    /* Pop off */
-    q -> head = q -> head -> next;
-    if(q -> head == NULL)
-    {
-        q -> tail = NULL;
-    }
-
-    free(tmp);
-    return result;
-
-}
-
-/* Setup the led peripheral */
-void led_setup( void )
-{
-    uint8 setup_commands[CMD_SIZE] = 
-    {
-        0x00, 0x00,
-        0x0C, 0xFF,
-        0x0D, 0xFF
-    };
-    uint8 wr_buff[WR_BUFF_SIZE];
-
-    uint8 index = 0;
-
-    for(uint8 i = 0; i < sizeof(setup_commands); i ++)
-    {
-        index ++;
-        if(index != 2)
-            continue;
-
-        index = 0;
-        wr_buff[0] = setup_commands[i - 1];
-        wr_buff[1] = setup_commands[i];
-
-        I2C_MasterWriteBuf(LED_ADDR, led_buffer, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
-        while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    }
+    memset(queue, 0, sizeof(queue));
 }
 
 
@@ -176,8 +127,60 @@ static void led_sel(uint8 led, uint8 status)
 }
 
 
-void led_process(void)
+/* Setup the led peripheral */
+void led_setup( void )
 {
+    uint8 setup_commands[CMD_SIZE] = 
+    {
+        0x00, 0x00,
+        0x0C, 0xFF,
+        0x0D, 0xFF
+    };
+    uint8 wr_buff[WR_BUFF_SIZE];
+
+    uint8 index = 0;
+
+    for(uint8 i = 0; i < sizeof(setup_commands); i ++)
+    {
+        index ++;
+        if(index != 2)
+            continue;
+
+        index = 0;
+        wr_buff[0] = setup_commands[i - 1];
+        wr_buff[1] = setup_commands[i];
+
+        I2C_MasterWriteBuf(LED_ADDR, led_buffer, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
+        while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    }
+
+    /* Initialize queue */
+    init_queue();
+}
+
+
+void led_process(void)
+{   
+    /* If the queue is empty, then do not enter */
+    if(buff.count == 0)
+        return;
+
+    /* Pull the next request from the queue */
+    queue_t* field = (*queue_t)pull_queue_req();
+}
+
+
+/* Submit a request to the queue */
+void uint8 led_enqueue(uint8 field)
+{
+    if(buff.count >= QUEUE_SIZE)
+        return QUEUE_FULL;
+
+    
+
+    buff_ptr -> data[buff_ptr->count] = field;
+    buff_ptr -> count++;
+    buff_ptr -> head = 
 }
 
 /* [] END OF FILE */
