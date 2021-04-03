@@ -17,6 +17,8 @@
 #include "data.h"
 #include "led_ctrl.h"
 
+#include "stdbool.h"
+
 
 #define CMD_DATA    (0x01)
 #define WR_BUF_SIZE (1u)
@@ -27,6 +29,10 @@
 
 /* Sets up pointers to charger i2c index */ 
 i2c_requests_t* charger_requests = &i2c_parameters[CHARGER_ID];
+
+static bool has_entered_low;
+static bool has_entered_mid;
+static bool has_entered_high;
 
 
 void charge_meter_setup(void)
@@ -75,18 +81,39 @@ void battery_monitor_process(void)
     /* Light the corresponding LED based on the battery voltage level */
     if(tx_data.charge_level >= HIGH_TH)
     {
+        if(has_entered_high)
+            return;
+
+        has_entered_low = false;
+        has_entered_mid = false;
+        has_entered_high = true;
+
         led_add_queue(LED_GREEN_1, TRUE);
         led_add_queue(LED_YELLOW, FALSE);
         led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level >= LOW_TH && tx_data.charge_level < HIGH_TH)
     {
+        if(has_entered_mid)
+            return;
+
+        has_entered_low = false;
+        has_entered_mid = true;
+        has_entered_high = false;
+
         led_add_queue(LED_GREEN_1, FALSE);
         led_add_queue(LED_YELLOW, TRUE);
         led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level < LOW_TH)
     {
+        if(has_entered_low)
+            return;
+
+        has_entered_low = true;
+        has_entered_mid = false;
+        has_entered_high = false;
+
         led_add_queue(LED_GREEN_1, FALSE);
         led_add_queue(LED_YELLOW, FALSE);
         led_add_queue(LED_RED, TRUE);

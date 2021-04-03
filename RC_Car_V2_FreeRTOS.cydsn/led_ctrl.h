@@ -36,6 +36,8 @@
     
 
 void led_setup( void );
+void led_process(void);
+void led_add_queue(uint8 field, uint8 scale);
     
 #endif
 

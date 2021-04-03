@@ -24,7 +24,7 @@ typedef struct
     uint8 field;
 } i2c_req_t;
 
-i2c_req_t i2c_req[REQ_BUFF_SIZE];
+i2c_req_t req_queue[REQ_BUFF_SIZE];
 queue_t i2c_queue;
 
 
@@ -86,6 +86,13 @@ static void perform_process(uint8 field)
 }
 
 
+void init_i2c(void)
+{
+    /* Initialize queue */
+    queue_init(&i2c_queue, REQ_BUFF_SIZE, req_queue);
+}
+
+
 /* To be called on main I2C process */
 void i2c_process(void)
 {   
@@ -102,9 +109,9 @@ void i2c_process(void)
 
 
 /* Submit a request to the queue */
-void i2c_add_queue(uint8 field, uint8 scale)
+void i2c_add_queue(uint8 field)
 {
-    i2c_req_t* led_req = (i2c_req_t*)queue_get_req(&i2c_queue, sizeof(i2c_req_t));
+    i2c_req_t* i2c_req = (i2c_req_t*)queue_get_req(&i2c_queue, sizeof(i2c_req_t));
     i2c_req->field = field;
 
     queue_inc_req_ptr(&i2c_queue);

@@ -46,8 +46,10 @@ typedef struct __attribute__((__packed__))  /* Defining incoming data structure 
 
 i2c_requests_t i2c_parameters[NUM_REQUESTS + 1u];
 
+
+void init_i2c(void);
 void i2c_process(void);
-void queue_req(uint8 field);
+void i2c_add_queue(uint8 field);
     
 #endif
 

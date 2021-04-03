@@ -27,17 +27,18 @@
 #define QUEUE_SIZE      (10u)
 
 
+/* Selects the led to turn on and the level */
 typedef struct
 {
     uint8 field;
     uint8 scale;
 } led_req_t;
 
-led_req_t req_queue[QUEUE_SIZE];
-queue_t led_queue;
+static led_req_t req_queue[QUEUE_SIZE];
+static queue_t led_queue;
 
 /* Set up pointer to the i2c controller buffer */
-i2c_requests_t* led_i2c_param = &i2c_parameters[LED_ID];
+static i2c_requests_t* led_i2c_param = &i2c_parameters[LED_ID];
 
 
 static void led_sel(uint8 led, uint8 scale)
@@ -77,37 +78,67 @@ static void led_sel(uint8 led, uint8 scale)
             break;
     }
     
-    I2C_MasterClearStatus();
+    i2c_add_queue(REQ_LED);
 }
 
 
 /* Setup the led peripheral */
 void led_setup( void )
 {
-    uint8 setup_commands[CMD_SIZE] = 
-    {
-        0x00, 0x00,
-        0x0C, 0xFF,
-        0x0D, 0xFF
-    };
-    uint8 wr_buff[WR_BUFF_SIZE];
+    // uint8 setup_commands[CMD_SIZE] = 
+    // {
+    //     0x00, 0x00,
+    //     0x0C, 0xFF,
+    //     0x0D, 0xFF
+    // };
+    // uint8 wr_buff[WR_BUFF_SIZE];
 
-    uint8 index = 0;
+    // uint8 index = 0;
 
-    for(uint8 i = 0; i < sizeof(setup_commands); i ++)
-    {
-        index ++;
-        if(index != 2)
-            continue;
+    // for(uint8 i = 0; i < sizeof(setup_commands); i ++)
+    // {
+    //     index ++;
+    //     if(index != 2)
+    //         continue;
 
-        index = 0;
-        wr_buff[0] = setup_commands[i - 1];
-        wr_buff[1] = setup_commands[i];
+    //     index = 0;
+    //     wr_buff[0] = setup_commands[i - 1];
+    //     wr_buff[1] = setup_commands[i];
 
-        I2C_MasterWriteBuf(LED_ADDR, wr_buff, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
-        while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    }
+    //     I2C_MasterWriteBuf(LED_ADDR, wr_buff, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
+    //     while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    // }
 
+    uint8 led_buffer[2];
+
+    led_buffer[0]=0x00;
+    led_buffer[1]=0x00;
+    
+    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
+    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    
+    led_buffer[0]=0x0c;
+    led_buffer[1]=0xFF;
+    
+    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
+    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    
+    led_buffer[0]=0x0d;
+    led_buffer[1]=0xFF;
+    
+    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
+    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    
+    led_buffer[0] = LED_YELLOW_ADDR;
+    led_buffer[1] = OFF;
+    
+    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
+            
+    while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+
+    led_i2c_param->device_addr = LED_ADDR;
+    led_i2c_param->wr_len = WR_BUFF_SIZE;
+    
     /* Initialize queue */
     queue_init(&led_queue, QUEUE_SIZE, req_queue);
 }
