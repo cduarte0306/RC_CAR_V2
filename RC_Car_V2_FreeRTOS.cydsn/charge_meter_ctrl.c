@@ -41,6 +41,7 @@ void charge_meter_setup(void)
     charger_requests->device_addr = CHARGER_ADDR;
     memcpy(charger_requests->wr_buff, chgr_wr_buf, sizeof(chgr_wr_buf));  // Sets the write buffer
     charger_requests->wr_len = sizeof(chgr_wr_buf);  // Sets the write length 
+    charger_requests->rd_len = sizeof(i2c_meter_data_t);
 }
 
 
@@ -71,6 +72,7 @@ static void battery_monitor_read(void)
         tx_data.charge_level = i2c_meter_data.charge_data.charge_level;
     
     /* Set the buffer to request data */
+    i2c_add_queue(REQ_CHARGER);
 }
 
 

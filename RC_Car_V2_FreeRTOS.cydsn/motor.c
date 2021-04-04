@@ -16,6 +16,7 @@
 #include "led_ctrl.h"
 #include "rc_car.h"
 #include "data.h"
+#include "stdbool.h"
 
 
 #define SPEED_PLUS     0x02
@@ -25,6 +26,8 @@
 
 
 static uint16 speed_set;
+static bool has_been_set_high;
+static bool has_been_set_low;
 
 
 void motor_setup(void)
@@ -80,14 +83,26 @@ void motor_process(void)
     if(rx_data.drive_mode_bits == FALSE)
     {
         motor();
-        led_add_queue(LED_GREEN_2, FALSE);
+
+        if(!has_been_set_low)
+        {
+            led_add_queue(LED_GREEN_2, FALSE);
+            has_been_set_low = true;
+            has_been_set_high = false;
+        }
     }
     else
     {
         PWM_Motor_Start();
         PWM_Motor_WriteCompare2(FALSE);
         pid(rx_data.speed_set);
-        led_add_queue(LED_GREEN_2, TRUE);
+
+        if(!has_been_set_high)
+        {
+            led_add_queue(LED_GREEN_2, TRUE);
+            has_been_set_low = false;
+            has_been_set_high = true;
+        }
     }
     
     servo();   

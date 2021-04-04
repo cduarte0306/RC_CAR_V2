@@ -201,7 +201,7 @@ int main(void)
             
     xTaskCreate(jetson_task, 
                 "gps task", 
-                1024, 
+                512, 
                 NULL, 
                 1, 
                 &jetson_handle);

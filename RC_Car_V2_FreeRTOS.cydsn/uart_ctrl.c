@@ -15,6 +15,7 @@
 #include "data.h"
 #include "utilities.h"
 #include "led_ctrl.h"
+#include "stdbool.h"
 
 
 #define TIMEOUT     10000u
@@ -26,6 +27,9 @@ static uint8 rx_data_buffer[sizeof(uart_buff_data_in_t)];
 static uint8 cheksum_buff[sizeof(rx_data_t)];
 static uint8 cheksum_in;
 static uint8 packet_ok = 0;
+
+static bool has_been_set_high;
+static bool has_been_set_low;
 
 
 CY_ISR(rx_handler)
@@ -109,7 +113,13 @@ static void uart_unpack_data(void)
     {
         memcpy(&rx_data, &uart_buff_data_in.data_in, sizeof(rx_data_t));
         UART_Radio_ClearRxBuffer();
-        led_add_queue(LED_BLUE, TRUE);
+        
+        if(!has_been_set_high)
+        {
+            led_add_queue(LED_BLUE, TRUE);
+            has_been_set_high = true;
+            has_been_set_low = false;
+        }
     }
     
     packet_ok = FALSE;
@@ -143,7 +153,14 @@ void uart_process(void)
         time_out = 0;
     
     if(time_out > TIMEOUT)
-        led_add_queue(LED_BLUE, FALSE);    
+    {
+        if(!has_been_set_low)
+        {
+            led_add_queue(LED_BLUE, FALSE);    
+            has_been_set_low = true;
+            has_been_set_high = false;
+        }
+    }
 }
 
 
