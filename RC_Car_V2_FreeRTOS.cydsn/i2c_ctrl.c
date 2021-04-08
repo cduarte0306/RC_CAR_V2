@@ -60,7 +60,7 @@ static void i2c_charger_update(void)
                        i2c_parameters[CHARGER_ID].rd_len,
                        I2C_MODE_REPEAT_START);
 
-    while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
+    //while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
 }
 
 
@@ -83,6 +83,8 @@ static void perform_process(uint8 field)
         default:
             break;
     }
+    
+    I2C_MasterClearReadBuf();
 }
 
 

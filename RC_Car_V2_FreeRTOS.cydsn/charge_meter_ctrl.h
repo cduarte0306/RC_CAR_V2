@@ -19,6 +19,7 @@
 typedef struct __attribute__((__packed__))  /* Defining incoming data structure   */
 {
     uint8 charge_level;
+    uint16 input_current;
 } meter_data_t;
   
 typedef struct __attribute__((__packed__))  /* Defining incoming data structure   */
