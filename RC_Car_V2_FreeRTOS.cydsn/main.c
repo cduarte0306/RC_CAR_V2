@@ -35,6 +35,7 @@
 #include "charge_meter_ctrl.h"
 #include "gps_ctrl.h"
 #include "eeprom_ctrl.h"
+#include "accelerometer_ctrl.h"
 
 
 /* Wait constants */
@@ -44,16 +45,16 @@
 
 
 /* The following ISR handles any alarms in the case of motor overcurrent */
-CY_ISR(alert_handler)
-{
-    /* Stops the motor in the event of an interrupt */
-    if(!Alert_Read())
-        PWM_Motor_Stop();
-    else
-        PWM_Motor_Start();
-
-    Alert_ClearInterrupt();
-}
+//CY_ISR(alert_handler)
+//{
+//    /* Stops the motor in the event of an interrupt */
+//    if(!Alert_Read())
+//        PWM_Motor_Stop();
+//    else
+//        PWM_Motor_Start();
+//
+//    Alert_ClearInterrupt();
+//}
 
 
 extern void FreeRTOS_Start();
@@ -92,6 +93,7 @@ void code_initialization(void)
     trigger_reset_Write(TRUE);
     eeprom_init();
     init_i2c();
+    accelerometer_setup();
     
     /* Initialize motor PWM at 0 */
     PWM_Motor_WriteCompare1(0);
@@ -152,9 +154,9 @@ int main(void)
 
     xTaskCreate(motor_task, 
                 "motor task", 
-                1024, 
+                2048, 
                 NULL, 
-                2, 
+                1, 
                 &motor_handle);
 
     xTaskCreate(ultrasonic_task, 
@@ -240,7 +242,7 @@ void motor_task(void *ptr)
     while(1)
     {   
         motor_process();
-        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
+        //vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 

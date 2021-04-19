@@ -18,7 +18,7 @@
     
 #define CHARGER_ADDR        (0x04)
 #define LED_ADDR            (0x20)
-#define ACCELEROMETER_ADDR  (0x0C)
+#define ACCELEROMETER_ADDR  (0x1C)
 
 /* I2C requests index */
 #define DEFAULT_REQ         (0u)

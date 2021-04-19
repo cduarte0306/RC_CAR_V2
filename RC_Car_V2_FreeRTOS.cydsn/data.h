@@ -60,6 +60,8 @@ typedef struct __attribute__((__packed__))
     uint16 z_axis;
     uint8 gngga_msg[MSG_SIZE];
     uint8 charge_level;
+    float input_current;
+    float motor_current;
     uint8 eeprom_flag;
 } tx_data_t;
 

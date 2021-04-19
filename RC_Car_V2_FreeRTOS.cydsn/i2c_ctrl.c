@@ -36,15 +36,15 @@ static void i2c_led_update(void)
                         I2C_MODE_COMPLETE_XFER
     );
 
-    while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
 }
 
 
 static void i2c_charger_update(void)
-{
-    /* Wait if there is a trasnfer in progress */
+{    
+    /* Wait if there is a transfer in progress */
     while(1u == (I2C_MasterStatus() & I2C_MSTAT_XFER_INP)){};
-    
+
     /* Write data to slave */
     I2C_MasterWriteBuf( i2c_parameters[CHARGER_ID].device_addr, 
                         i2c_parameters[CHARGER_ID].wr_buff, 
@@ -60,7 +60,7 @@ static void i2c_charger_update(void)
                        i2c_parameters[CHARGER_ID].rd_len,
                        I2C_MODE_REPEAT_START);
 
-    //while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
+    while (0u == (I2C_MasterStatus() & I2C_MSTAT_RD_CMPLT)){};
 }
 
 
@@ -85,6 +85,7 @@ static void perform_process(uint8 field)
     }
     
     I2C_MasterClearReadBuf();
+    I2C_MasterClearStatus();
 }
 
 

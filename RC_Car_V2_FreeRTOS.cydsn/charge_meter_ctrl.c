@@ -65,11 +65,15 @@ static uint8 i2c_cheksum_calc(meter_data_t *buffer)
 
 static void battery_monitor_read(void)
 {      
-    memcpy(&i2c_meter_data, &charger_requests->rd_buff, sizeof(i2c_meter_data_t));
+    memcpy(&i2c_meter_data, charger_requests->rd_buff, sizeof(i2c_meter_data_t));
     uint8 checksum_status = i2c_cheksum_calc(&i2c_meter_data.charge_data);
 
     if(checksum_status)
-        tx_data.charge_level = i2c_meter_data.charge_data.charge_level;
+    {
+        tx_data.charge_level  = i2c_meter_data.charge_data.charge_level;
+        tx_data.input_current = i2c_meter_data.charge_data.input_current;
+        //tx_data.motor_current = i2c_meter_data.charge_data.motor_current;
+    }
     
     /* Set the buffer to request data */
     i2c_add_queue(REQ_CHARGER);

@@ -28,7 +28,7 @@
 #define LED_GREEN_2_ADDR (0x03)
 #define LED_BLUE_ADDR    (0x02)
 
-#define FULL_SCALE         (0xFF)
+#define FULL_SCALE         127u//(0xFF)
 #define OFF                (0x00)
 
 #define QUEUE_AVAILABLE (0x00)

@@ -15,6 +15,9 @@
 
 #include <cytypes.h>
 
+
+void accelerometer_setup(void);
+
 #endif
 
 /* [] END OF FILE */

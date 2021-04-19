@@ -22,7 +22,8 @@
 
 
 #define WR_BUFF_SIZE    (2u)
-#define CMD_SIZE        (6)
+#define CMD_SIZE        (6u)
+#define SUB_CMD         (2u)
 
 #define QUEUE_SIZE      (10u)
 
@@ -85,56 +86,25 @@ static void led_sel(uint8 led, uint8 scale)
 /* Setup the led peripheral */
 void led_setup( void )
 {
-    // uint8 setup_commands[CMD_SIZE] = 
-    // {
-    //     0x00, 0x00,
-    //     0x0C, 0xFF,
-    //     0x0D, 0xFF
-    // };
-    // uint8 wr_buff[WR_BUFF_SIZE];
+    uint8 setup_commands[CMD_SIZE][SUB_CMD] = 
+    {
+        {0x00, 0x00},
+        {0x0C, 0xFF},
+        {0x0D, 0xFF}
+    };
+
+    uint8 wr_buff[WR_BUFF_SIZE];
 
     // uint8 index = 0;
 
-    // for(uint8 i = 0; i < sizeof(setup_commands); i ++)
-    // {
-    //     index ++;
-    //     if(index != 2)
-    //         continue;
+    for(uint8 i = 0; i < sizeof(CMD_SIZE); i ++)
+    {
+        wr_buff[0] = setup_commands[i][0];
+        wr_buff[1] = setup_commands[i][1];
 
-    //     index = 0;
-    //     wr_buff[0] = setup_commands[i - 1];
-    //     wr_buff[1] = setup_commands[i];
-
-    //     I2C_MasterWriteBuf(LED_ADDR, wr_buff, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
-    //     while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    // }
-
-    uint8 led_buffer[2];
-
-    led_buffer[0]=0x00;
-    led_buffer[1]=0x00;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0]=0x0c;
-    led_buffer[1]=0xFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0]=0x0d;
-    led_buffer[1]=0xFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-    while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
-    
-    led_buffer[0] = LED_YELLOW_ADDR;
-    led_buffer[1] = OFF;
-    
-    I2C_MasterWriteBuf(LED_ADDR, led_buffer, 2, I2C_MODE_COMPLETE_XFER);
-            
-    while(0u != (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+        I2C_MasterWriteBuf(LED_ADDR, wr_buff, WR_BUFF_SIZE, I2C_MODE_COMPLETE_XFER);
+        while(0u == (I2C_MasterStatus() & I2C_MSTAT_WR_CMPLT));
+    }
 
     led_i2c_param->device_addr = LED_ADDR;
     led_i2c_param->wr_len = WR_BUFF_SIZE;

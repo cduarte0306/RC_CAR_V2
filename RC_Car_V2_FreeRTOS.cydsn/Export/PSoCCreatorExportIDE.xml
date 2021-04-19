@@ -50,6 +50,7 @@
           <File BuildType="BUILD" Toolchain="">eeprom_ctrl.c</File>
           <File BuildType="BUILD" Toolchain="">jetson.c</File>
           <File BuildType="BUILD" Toolchain="">queue_ctrl.c</File>
+          <File BuildType="BUILD" Toolchain="">accelerometer_ctrl.c</File>
           <File BuildType="BUILD" Toolchain="">utilities.h</File>
           <File BuildType="BUILD" Toolchain="">motor.h</File>
           <File BuildType="BUILD" Toolchain="">i2c_ctrl.h</File>
@@ -65,6 +66,7 @@
           <File BuildType="BUILD" Toolchain="">eeprom_ctrl.h</File>
           <File BuildType="BUILD" Toolchain="">jetson.h</File>
           <File BuildType="BUILD" Toolchain="">queue_ctrl.h</File>
+          <File BuildType="BUILD" Toolchain="">accelerometer_ctrl.h</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\portable\MemMang\heap_1.c</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\croutine.c</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\event_groups.c</File>

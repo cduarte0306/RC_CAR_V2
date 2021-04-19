@@ -18,7 +18,7 @@
 #include "stdbool.h"
 
 
-#define TIMEOUT     10000u
+#define TIMEOUT     2000u
 
 
 static uint8 rx_index = 0;  // Circular buffer index
@@ -27,6 +27,7 @@ static uint8 rx_data_buffer[sizeof(uart_buff_data_in_t)];
 static uint8 cheksum_buff[sizeof(rx_data_t)];
 static uint8 cheksum_in;
 static uint8 packet_ok = 0;
+static uint8 msg_status = 0;
 
 static bool has_been_set_high;
 static bool has_been_set_low;
@@ -44,11 +45,14 @@ CY_ISR(rx_handler)
     if(rx_data_buffer[rx_index] == CR && rx_index == sizeof(uart_buff_data_in_t) - 1u)
     {
         packet_ok = TRUE;
-    }   
-    
-    rx_index++;
-    
-    if(rx_index == RX_MESSAGE_NUM) rx_index = 0;
+    }
+    else
+    {
+        rx_index++;
+        
+        if(rx_index >= sizeof(uart_buff_data_in_t)) 
+            rx_index = 0;
+    }
     
     rx_isr_ClearPending();  // Clears the ISR to continue with normal operation
 }
@@ -122,6 +126,7 @@ static void uart_unpack_data(void)
         }
     }
     
+    msg_status = FALSE;
     packet_ok = FALSE;
 }
 
@@ -147,7 +152,7 @@ void uart_process(void)
     static uint32 time_out;
     uart_unpack_data();
     
-    if(!packet_ok)
+    if(!msg_status)
         time_out ++;
     else 
         time_out = 0;
@@ -160,6 +165,8 @@ void uart_process(void)
             has_been_set_low = true;
             has_been_set_high = false;
         }
+        
+        time_out = 0;
     }
 }
 
