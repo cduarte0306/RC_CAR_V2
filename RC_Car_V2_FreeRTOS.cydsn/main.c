@@ -35,6 +35,7 @@
 #include "charge_meter_ctrl.h"
 #include "gps_ctrl.h"
 #include "eeprom_ctrl.h"
+#include "accelerometer_ctrl.h"
 
 
 /* Wait constants */
@@ -44,16 +45,16 @@
 
 
 /* The following ISR handles any alarms in the case of motor overcurrent */
-CY_ISR(alert_handler)
-{
-    /* Stops the motor in the event of an interrupt */
-    if(!Alert_Read())
-        PWM_Motor_Stop();
-    else
-        PWM_Motor_Start();
-
-    Alert_ClearInterrupt();
-}
+//CY_ISR(alert_handler)
+//{
+//    /* Stops the motor in the event of an interrupt */
+//    if(!Alert_Read())
+//        PWM_Motor_Stop();
+//    else
+//        PWM_Motor_Start();
+//
+//    Alert_ClearInterrupt();
+//}
 
 
 extern void FreeRTOS_Start();
@@ -91,6 +92,8 @@ void code_initialization(void)
     gps_setup();
     trigger_reset_Write(TRUE);
     eeprom_init();
+    init_i2c();
+    accelerometer_setup();
     
     /* Initialize motor PWM at 0 */
     PWM_Motor_WriteCompare1(0);
@@ -109,6 +112,7 @@ void speed_task(void *ptr);
 void i2c_update_task(void *ptr);
 void gps_task(void* ptr);
 void jetson_task(void* ptr);
+void led_ctrl_task(void* ptr);
 
 ///* All handle declarations here */
 TaskHandle_t uart_rx_handle    = NULL;
@@ -120,6 +124,7 @@ TaskHandle_t speed_ctrl_handle = NULL;
 TaskHandle_t i2c_update_handle = NULL;
 TaskHandle_t gps_handle        = NULL;
 TaskHandle_t jetson_handle     = NULL; 
+TaskHandle_t led_handle        = NULL; 
 
 
 int main(void)
@@ -149,9 +154,9 @@ int main(void)
 
     xTaskCreate(motor_task, 
                 "motor task", 
-                1024, 
+                2048, 
                 NULL, 
-                2, 
+                1, 
                 &motor_handle);
 
     xTaskCreate(ultrasonic_task, 
@@ -189,9 +194,16 @@ int main(void)
                 1, 
                 &gps_handle);
 
+    xTaskCreate(led_ctrl_task, 
+                "led task", 
+                1024, 
+                NULL, 
+                1, 
+                &led_handle);
+            
     xTaskCreate(jetson_task, 
                 "gps task", 
-                1024, 
+                512, 
                 NULL, 
                 1, 
                 &jetson_handle);
@@ -230,7 +242,7 @@ void motor_task(void *ptr)
     while(1)
     {   
         motor_process();
-        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
+        //vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -240,6 +252,7 @@ void ultrasonic_task(void *ptr)
     while(1)
     {
         distance_update();
+        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -260,6 +273,7 @@ void speed_task(void *ptr)
     while(1)
     {
         speed_update();
+        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -269,6 +283,7 @@ void i2c_update_task(void *ptr)
     while(1)
     {
         i2c_process();
+        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -288,7 +303,17 @@ void jetson_task(void *ptr)
 {
     while(1)
     {
-         vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
+        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
+    }
+}
+
+
+void led_ctrl_task(void *ptr)
+{
+    while(1)
+    {
+        led_process();
+        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 

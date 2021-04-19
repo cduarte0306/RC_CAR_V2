@@ -43,7 +43,7 @@ void distance_update(void)
     
     tx_data.front_distance = avg_filter(&distance_front_avg ,distance_front/58.0, WEIGHT);
     tx_data.right_distance = avg_filter(&distance_right_avg ,distance_right/58.0, WEIGHT);
-    tx_data.left_distance  = avg_filter(&distance_left_avg, distance_left /58.0, WEIGHT); 
+    tx_data.left_distance  = avg_filter(&distance_left_avg, distance_left /58.0,  WEIGHT); 
 }
 
 

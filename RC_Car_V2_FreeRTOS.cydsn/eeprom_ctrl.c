@@ -57,7 +57,7 @@ void eeprom_init(void)
 
 static uint8 save_kp(void)
 {
-    memcpy(kp_array, &rx_data.pid_calib.kp, sizeof(rx_data.pid_calib.kp));
+    //memcpy(kp_array, &rx_data.pid_calib.kp, sizeof(rx_data.pid_calib.kp));
 
     uint8 ret = EEPROM_Write((uint8*)kp_array, 16 * 0);
     if(ret == CYRET_LOCKED)  // Write to row 0 on EEPROM
@@ -68,7 +68,7 @@ static uint8 save_kp(void)
 
 static uint8 save_ki(void)
 {
-    memcpy(kp_array, &rx_data.pid_calib.ki, sizeof(rx_data.pid_calib.ki));
+    //memcpy(kp_array, &rx_data.pid_calib.ki, sizeof(rx_data.pid_calib.ki));
 
     uint8 ret = EEPROM_Write((uint8*)ki_array, 16 * 1);
     if(ret == CYRET_LOCKED)  // Write to row 1 on EEPROM
@@ -79,7 +79,7 @@ static uint8 save_ki(void)
 
 static uint8 save_kd(void)
 {
-    memcpy(kp_array, &rx_data.pid_calib.kd, sizeof(rx_data.pid_calib.kd));
+    //memcpy(kp_array, &rx_data.pid_calib.kd, sizeof(rx_data.pid_calib.kd));
 
     uint8 ret = EEPROM_Write((uint8*)kd_array, 16 * 0);
     if(ret == CYRET_LOCKED)  // Write to row 0 on EEPROM

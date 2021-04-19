@@ -17,6 +17,8 @@
 #include "data.h"
 #include "led_ctrl.h"
 
+#include "stdbool.h"
+
 
 #define CMD_DATA    (0x01)
 #define WR_BUF_SIZE (1u)
@@ -26,18 +28,20 @@
 
 
 /* Sets up pointers to charger i2c index */ 
-i2c_requests_t* charger_requests = &i2c_requests[CHARGER_ID];
+i2c_requests_t* charger_requests = &i2c_parameters[CHARGER_ID];
+
+static bool has_entered_low;
+static bool has_entered_mid;
+static bool has_entered_high;
 
 
 void charge_meter_setup(void)
 {
-    uint8 chgr_wr_buf[WR_BUF_SIZE] = {CMD_DATA};
-    
-    request_buffer[CHARGER_ID] = FALSE;
-    
+    uint8 chgr_wr_buf[WR_BUF_SIZE] = {CMD_DATA};    
     charger_requests->device_addr = CHARGER_ADDR;
     memcpy(charger_requests->wr_buff, chgr_wr_buf, sizeof(chgr_wr_buf));  // Sets the write buffer
     charger_requests->wr_len = sizeof(chgr_wr_buf);  // Sets the write length 
+    charger_requests->rd_len = sizeof(i2c_meter_data_t);
 }
 
 
@@ -60,18 +64,19 @@ static uint8 i2c_cheksum_calc(meter_data_t *buffer)
 
 
 static void battery_monitor_read(void)
-{    
-    if(request_buffer[CHARGER_ID] == TRUE)
-        return;
-    
+{      
     memcpy(&i2c_meter_data, charger_requests->rd_buff, sizeof(i2c_meter_data_t));
     uint8 checksum_status = i2c_cheksum_calc(&i2c_meter_data.charge_data);
 
     if(checksum_status)
-        tx_data.charge_level = i2c_meter_data.charge_data.charge_level;
+    {
+        tx_data.charge_level  = i2c_meter_data.charge_data.charge_level;
+        tx_data.input_current = i2c_meter_data.charge_data.input_current;
+        //tx_data.motor_current = i2c_meter_data.charge_data.motor_current;
+    }
     
     /* Set the buffer to request data */
-    request_buffer[CHARGER_ID] = TRUE;
+    i2c_add_queue(REQ_CHARGER);
 }
 
 
@@ -82,21 +87,42 @@ void battery_monitor_process(void)
     /* Light the corresponding LED based on the battery voltage level */
     if(tx_data.charge_level >= HIGH_TH)
     {
-        led_sel(LED_GREEN_1, TRUE);
-        led_sel(LED_YELLOW, FALSE);
-        led_sel(LED_RED, FALSE);
+        if(has_entered_high)
+            return;
+
+        has_entered_low = false;
+        has_entered_mid = false;
+        has_entered_high = true;
+
+        led_add_queue(LED_GREEN_1, TRUE);
+        led_add_queue(LED_YELLOW, FALSE);
+        led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level >= LOW_TH && tx_data.charge_level < HIGH_TH)
     {
-        led_sel(LED_GREEN_1, FALSE);
-        led_sel(LED_YELLOW, TRUE);
-        led_sel(LED_RED, FALSE);
+        if(has_entered_mid)
+            return;
+
+        has_entered_low = false;
+        has_entered_mid = true;
+        has_entered_high = false;
+
+        led_add_queue(LED_GREEN_1, FALSE);
+        led_add_queue(LED_YELLOW, TRUE);
+        led_add_queue(LED_RED, FALSE);
     }
     else if(tx_data.charge_level < LOW_TH)
     {
-        led_sel(LED_GREEN_1, FALSE);
-        led_sel(LED_YELLOW, FALSE);
-        led_sel(LED_RED, TRUE);
+        if(has_entered_low)
+            return;
+
+        has_entered_low = true;
+        has_entered_mid = false;
+        has_entered_high = false;
+
+        led_add_queue(LED_GREEN_1, FALSE);
+        led_add_queue(LED_YELLOW, FALSE);
+        led_add_queue(LED_RED, TRUE);
     }
 }
 

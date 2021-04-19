@@ -25,7 +25,7 @@
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
   </Toolchains>
-  <Project Name="RC_Car_V2_FreeRTOS" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" Version="5.81" Type="Normal">
+  <Project Name="RC_Car_V2_FreeRTOS" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" Version="5.81" Type="Normal">
     <CMSIS_SVD_File>RC_Car_V2_FreeRTOS.svd</CMSIS_SVD_File>
     <Datasheet />
     <LinkerFiles>
@@ -34,8 +34,8 @@
       <LinkerFile Toolchain="ARM IAR Generic">.\Generated_Source\PSoC5\Cm3Iar.icf</LinkerFile>
     </LinkerFiles>
     <Folders>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="">main.c</File>
           <File BuildType="BUILD" Toolchain="">FreeRTOS.c</File>
           <File BuildType="BUILD" Toolchain="">uart_ctrl.c</File>
@@ -48,6 +48,9 @@
           <File BuildType="BUILD" Toolchain="">motor.c</File>
           <File BuildType="BUILD" Toolchain="">gps_ctrl.c</File>
           <File BuildType="BUILD" Toolchain="">eeprom_ctrl.c</File>
+          <File BuildType="BUILD" Toolchain="">jetson.c</File>
+          <File BuildType="BUILD" Toolchain="">queue_ctrl.c</File>
+          <File BuildType="BUILD" Toolchain="">accelerometer_ctrl.c</File>
           <File BuildType="BUILD" Toolchain="">utilities.h</File>
           <File BuildType="BUILD" Toolchain="">motor.h</File>
           <File BuildType="BUILD" Toolchain="">i2c_ctrl.h</File>
@@ -61,6 +64,9 @@
           <File BuildType="BUILD" Toolchain="">rc_car.h</File>
           <File BuildType="BUILD" Toolchain="">gps_ctrl.h</File>
           <File BuildType="BUILD" Toolchain="">eeprom_ctrl.h</File>
+          <File BuildType="BUILD" Toolchain="">jetson.h</File>
+          <File BuildType="BUILD" Toolchain="">queue_ctrl.h</File>
+          <File BuildType="BUILD" Toolchain="">accelerometer_ctrl.h</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\portable\MemMang\heap_1.c</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\croutine.c</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\event_groups.c</File>
@@ -72,8 +78,8 @@
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\timers.c</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn\Generated_Source\PSoC5">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn\Generated_Source\PSoC5">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cyfitter_cfg.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cyfitter_cfg.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cymetadata.c</File>
@@ -232,14 +238,14 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\alert_isr.h</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\portable\GCC\ARM_CM3\port.c</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\portable\GCC\ARM_CM3\portmacro.h</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\include\croutine.h</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\include\deprecated_definitions.h</File>
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\include\event_groups.h</File>
@@ -259,50 +265,50 @@
           <File BuildType="BUILD" Toolchain="">..\FreeRTOS\Source\include\timers.h</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_GCC_Generic">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_GCC_Generic">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="ARM GCC Generic">.\Export\ARM_GCC_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_MDK_Generic">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_MDK_Generic">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="ARM MDK Generic">.\Export\ARM_MDK_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
-      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_IAR_Generic">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn">
+      <Folder BuildType="STRICT" Path="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn\Export\ARM_IAR_Generic">
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn">
           <File BuildType="BUILD" Toolchain="ARM IAR Generic">.\Export\ARM_IAR_Generic\CyComponentLibrary.a</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\ARM_GCC_441">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\ARM_GCC_473">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\DP8051_Keil_952">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\DP8051">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM0">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM0p">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM3">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM4">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM7">
-        <Files Root="C:\Users\Carlos\Documents\PSoC Creator\RC_Car_V2_FreeRTOS\RC_Car_V2_FreeRTOS.cydsn" />
+        <Files Root="C:\Users\Carlos\Documents\Repos\RC_CAR_V2\RC_Car_V2_FreeRTOS.cydsn" />
       </Folder>
     </Folders>
   </Project>
