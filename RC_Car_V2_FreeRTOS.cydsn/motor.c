@@ -72,8 +72,11 @@ void servo(void)
     {
         PWM_Servo_Start();
         PWM_Servo_WriteCompare(rx_data.servo);
+
+        return;
     }
-    //else PWM_Servo_Stop();
+
+    else PWM_Servo_Stop();
 }
 
 

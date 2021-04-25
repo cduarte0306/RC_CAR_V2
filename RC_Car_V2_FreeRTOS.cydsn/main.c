@@ -40,6 +40,7 @@
 
 /* Wait constants */
 #define WAIT_1MS    (1u)
+#define WAIT_5MS    (5u)
 #define WAIT_20MS   (20u)
 #define WAIT_50MS   (50u)
 
@@ -76,8 +77,8 @@ void hardware_init(void)
     Timer_echo_3_Start();
 
     /* ISRs */
-    alert_isr_Start();
-    alert_isr_StartEx(alert_handler);
+    //alert_isr_Start();
+    //alert_isr_StartEx(alert_handler);
 }
 
 
@@ -90,7 +91,6 @@ void code_initialization(void)
     UART_Radio_ClearTxBuffer();
     motor_setup();
     gps_setup();
-    trigger_reset_Write(TRUE);
     eeprom_init();
     init_i2c();
     accelerometer_setup();
@@ -140,70 +140,70 @@ int main(void)
     /* All task callbacks go here */
     xTaskCreate(uart_task, 
                 "uart task", 
-                1024, 
+                200, 
                 NULL, 
-                3, 
+                2, 
                 &uart_rx_handle); 
     
     xTaskCreate(uart_send_task, 
                 "uart send task", 
-                1024, 
+                200, 
                 NULL, 
                 1, 
                 &uart_tx_handle); 
 
     xTaskCreate(motor_task, 
                 "motor task", 
-                2048, 
+                200, 
                 NULL, 
                 1, 
                 &motor_handle);
 
     xTaskCreate(ultrasonic_task, 
                 "ultrasonic task",
-                1024, 
+                200, 
                 NULL, 
                 1, 
                 &ultrasonic_handle);
 
     xTaskCreate(speed_task, 
                 "speed task", 
-                512, 
+                250, 
                 NULL, 
                 1, 
                 &speed_ctrl_handle);
 
     xTaskCreate(charger_monitor_task, 
                 "charger task",
-                512, 
+                250, 
                 NULL, 
                 1, 
                 &charger_handle);
 
     xTaskCreate(i2c_update_task, 
                 "i2c task",
-                512, 
+                250, 
                 NULL, 
                 1, 
                 &i2c_update_handle);
 
     xTaskCreate(gps_task, 
                 "gps task", 
-                1024, 
+                250, 
                 NULL, 
                 1, 
                 &gps_handle);
 
     xTaskCreate(led_ctrl_task, 
                 "led task", 
-                1024, 
+                250, 
                 NULL, 
-                1, 
+                2, 
                 &led_handle);
             
     xTaskCreate(jetson_task, 
                 "gps task", 
-                512, 
+                250, 
                 NULL, 
                 1, 
                 &jetson_handle);
@@ -222,7 +222,7 @@ void uart_task(void *ptr)
     while(1)
     {
         uart_process();
-        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
+        vTaskDelay(WAIT_5MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -242,7 +242,6 @@ void motor_task(void *ptr)
     while(1)
     {   
         motor_process();
-        //vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
@@ -252,7 +251,6 @@ void ultrasonic_task(void *ptr)
     while(1)
     {
         distance_update();
-        vTaskDelay(WAIT_1MS / portTICK_PERIOD_MS);
     }
 }
 
