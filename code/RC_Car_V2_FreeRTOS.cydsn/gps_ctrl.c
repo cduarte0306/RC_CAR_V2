@@ -104,7 +104,8 @@ void gps_process(void)
         for(uint i = 0; i < gps_index; i++)
         {                   
             /* Count each comma */
-            tx_data.gngga_msg[i] = gps_array[i];
+            //tx_data.gngga_msg[i] = gps_array[i];
+            return;
         }
     }
     else
