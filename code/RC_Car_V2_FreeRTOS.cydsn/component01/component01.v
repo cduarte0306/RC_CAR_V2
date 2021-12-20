@@ -14,22 +14,21 @@
 //`#end` -- edit above this line, do not edit this line
 // Generated on 10/14/2020 at 19:29
 // Component: component01
-module component01 (
-	output reg [7:0] RPM_Out,
+module component01 (RPM_Out, Reset_Out, Clock, Pulse_In, Reset);
+    output reg [7:0] RPM_Out = 8'b0,
     output reg Reset_Out,
-	input      Clock,
-	input wire Pulse_In,
-	input      Reset
-);
+    input      Clock,
+    input      Pulse_In,
+    input      Reset;
     reg [7:0] pulse_count;
     reg [7:0] count;
     reg [6:0] accum;
-    //`#start body` -- edit after this line, do not edit this line
+
+    localparam MAX_COUNT = 200;
 
     //        Your code goes here
-    always @ (posedge Pulse_In ) begin
+    always @ (posedge Pulse_In ) 
         pulse_count <= pulse_count + 1;
-        //RPM_Out <= pulse_count;
     end
     
     always @ (posedge Clock or negedge Reset) begin
@@ -45,15 +44,7 @@ module component01 (
                 accum <= accum + 1;
                 if(accum >= 50) begin
                     Reset_Out <= 1;
-                    RPM_Out[0] <= pulse_count[0];
-                    RPM_Out[1] <= pulse_count[1];
-                    RPM_Out[2] <= pulse_count[2];
-                    RPM_Out[3] <= pulse_count[3];
-                    RPM_Out[4] <= pulse_count[4];
-                    RPM_Out[5] <= pulse_count[5];
-                    RPM_Out[6] <= pulse_count[6];
-                    RPM_Out[7] <= pulse_count[7];
-                end
+                    RPM_Out <= pulse_count;
             end
             
         end

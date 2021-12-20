@@ -45,21 +45,7 @@
 #define WAIT_50MS   (50u)
 
 
-/* The following ISR handles any alarms in the case of motor overcurrent */
-//CY_ISR(alert_handler)
-//{
-//    /* Stops the motor in the event of an interrupt */
-//    if(!Alert_Read())
-//        PWM_Motor_Stop();
-//    else
-//        PWM_Motor_Start();
-//
-//    Alert_ClearInterrupt();
-//}
-
-
 extern void FreeRTOS_Start();
-
 
 // None RTOS functions (i.e Hardare initialization)
 void hardware_init(void)

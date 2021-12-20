@@ -141,7 +141,7 @@ void uart_send_data()
     UART_Radio_PutArray(tx_buffer, sizeof(uart_buff_data_out_t));
     
     // Clears the contents of the tx buffer once the FIFO is empty
-    //UART_Radio_ClearTxBuffer();
+    UART_Radio_ClearTxBuffer();
         
     return;
 }
