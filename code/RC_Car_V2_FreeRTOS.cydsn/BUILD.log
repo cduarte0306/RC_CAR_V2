@@ -1,72 +1,23 @@
---------------- Build Started: 06/22/2021 23:55:47 Project: RC_Car_V2_FreeRTOS, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 05/06/2022 20:02:12 Project: RC_Car_V2_FreeRTOS, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 cydsfit.exe -.appdatapath "C:\Users\cayod\AppData\Local\Cypress Semiconductor\PSoC Creator\4.4" -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\RC_Car_V2_FreeRTOS.cyprj -d CY8C5888LTI-LP097 -s C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\Generated_Source\PSoC5 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
 Elaborating Design...
 HDL Generation...
 Synthesis...
-Tech Mapping...
-Info: plm.M0038: The pin named rx_gps(0) at location P12[0] prevents usage of special purposes: I2C:SCL. (App=cydsfit)
-Analog Placement...
-Log: apr.M0058: The analog placement iterative improvement is 91% done. (App=cydsfit)
-Analog Routing...
-Analog Code Generation...
-Digital Placement...
-Digital Routing...
-Bitstream Generation...
-Bitstream Verification...
-Static timing analysis...
-Warning: sta.M0021: RC_Car_V2_FreeRTOS_timing.html: Warning-1350: Asynchronous path(s) exist from "Clock_1" to "speed_in(0)_PAD". See the timing report for details. (File=C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\RC_Car_V2_FreeRTOS_timing.html)
-Warning: sta.M0021: RC_Car_V2_FreeRTOS_timing.html: Warning-1350: Asynchronous path(s) exist from "speed_in(0)_PAD" to "Clock_1". See the timing report for details. (File=C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\RC_Car_V2_FreeRTOS_timing.html)
-Warning: sta.M0019: RC_Car_V2_FreeRTOS_timing.html: Warning-1366: Setup time violation found in a path from clock ( CyBUS_CLK ) to clock ( UART_Jetson_IntClock ). (File=C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\RC_Car_V2_FreeRTOS_timing.html)
-Warning: sta.M0019: RC_Car_V2_FreeRTOS_timing.html: Warning-1366: Setup time violation found in a path from clock ( CyBUS_CLK ) to clock ( Clock_3 ). (File=C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\RC_Car_V2_FreeRTOS_timing.html)
-API Generation...
+ADD: fit.M0002: error: Syntax error at/before reserved symbol 'output'.
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 19)
+ADD: fit.M0002: error: Syntax error at/before reserved symbol 'end'.
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 32)
+ADD: fit.M0002: error: Expecting a constant expression in an if-generate condition. Only parameters, localparams and literals allowed in such an expression
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 43)
+ADD: fit.M0002: error: syntax error
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 44)
+ADD: fit.M0002: error: Expecting a constant expression in an if-generate condition. Only parameters, localparams and literals allowed in such an expression
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 45)
+ADD: fit.M0002: error: syntax error
+ * C:\Users\cayod\OneDrive\Documents\Repos\RC_CAR_V2\code\RC_Car_V2_FreeRTOS.cydsn\component01\component01.v (line 46)
+ADD: fit.M0002: error: Undeclared name:  status_bus
+ * C:\Program Files (x86)\Cypress\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\CyStatusReg_v1_90\CyStatusReg_v1_90.v (line 44)
 Dependency Generation...
 Cleanup...
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM3\ARM_GCC_541\Debug\main.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/FreeRTOS.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c FreeRTOS.c -o .\CortexM3\ARM_GCC_541\Debug\FreeRTOS.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/uart_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c uart_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\uart_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/rc_car.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c rc_car.c -o .\CortexM3\ARM_GCC_541\Debug\rc_car.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/pid_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c pid_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\pid_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/i2c_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c i2c_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\i2c_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/led_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c led_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\led_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/ultrasonic_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ultrasonic_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\ultrasonic_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/charge_meter_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c charge_meter_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\charge_meter_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/motor.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c motor.c -o .\CortexM3\ARM_GCC_541\Debug\motor.o
-motor.c: In function 'motor':
-motor.c:49:17: warning: operation on 'forward' may be undefined [-Wsequence-point]
-         forward = (forward >= MOTOR_MAX) ? (forward = MOTOR_MAX) : (forward = forward);
-                 ^
-motor.c:57:17: warning: operation on 'reverse' may be undefined [-Wsequence-point]
-         reverse = (reverse >= MOTOR_MAX) ? (reverse = MOTOR_MAX) : (reverse = reverse);
-                 ^
-motor.c: At top level:
-motor.c:28:15: warning: 'speed_set' defined but not used [-Wunused-variable]
- static uint16 speed_set;
-               ^
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/gps_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c gps_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\gps_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/eeprom_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c eeprom_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\eeprom_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/jetson.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c jetson.c -o .\CortexM3\ARM_GCC_541\Debug\jetson.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/queue_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c queue_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\queue_ctrl.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/accelerometer_ctrl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c accelerometer_ctrl.c -o .\CortexM3\ARM_GCC_541\Debug\accelerometer_ctrl.o
-accelerometer_ctrl.c: In function 'accelerometer_request_id':
-accelerometer_ctrl.c:36:11: warning: variable 'err_ret' set but not used [-Wunused-but-set-variable]
-     uint8 err_ret = I2C_MasterWriteBuf(ACCELEROMETER_ADDR, 
-           ^
-accelerometer_ctrl.c: In function 'accelerometer_setup':
-accelerometer_ctrl.c:58:11: warning: unused variable 'ret' [-Wunused-variable]
-     uint8 ret = accelerometer_request_id();
-           ^
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/port.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\portable\GCC\ARM_CM3\port.c -o .\CortexM3\ARM_GCC_541\Debug\port.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/heap_1.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\portable\MemMang\heap_1.c -o .\CortexM3\ARM_GCC_541\Debug\heap_1.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/croutine.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\croutine.c -o .\CortexM3\ARM_GCC_541\Debug\croutine.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/event_groups.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\event_groups.c -o .\CortexM3\ARM_GCC_541\Debug\event_groups.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/list.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\list.c -o .\CortexM3\ARM_GCC_541\Debug\list.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/queue.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\queue.c -o .\CortexM3\ARM_GCC_541\Debug\queue.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/stream_buffer.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\stream_buffer.c -o .\CortexM3\ARM_GCC_541\Debug\stream_buffer.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/tasks.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\tasks.c -o .\CortexM3\ARM_GCC_541\Debug\tasks.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/timers.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c ..\FreeRTOS\Source\timers.c -o .\CortexM3\ARM_GCC_541\Debug\timers.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m3 -mthumb -I..\FreeRTOS\Source -I..\FreeRTOS\Source\include -I..\FreeRTOS\Source\portable\GCC\ARM_CM3 -I..\FreeRTOS\Source\portable\MemMang -I. -IGenerated_Source\PSoC5 -Wa,-alh=.\CortexM3\ARM_GCC_541\Debug/cyfitter_cfg.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC5\cyfitter_cfg.c -o .\CortexM3\ARM_GCC_541\Debug\cyfitter_cfg.o
-In file included from Generated_Source\PSoC5\cyfitter_cfg.c:25:0:
-./cyapicallbacks.h:24:17: fatal error: led.h: No such file or directory
-compilation terminated.
-The command 'arm-none-eabi-gcc.exe' failed with exit code '1'.
---------------- Build Failed: 06/22/2021 23:56:09 ---------------
+Error: fit.M0050: The fitter aborted due to errors, please address all errors and rebuild. (App=cydsfit)
+--------------- Build Failed: 05/06/2022 20:02:15 ---------------

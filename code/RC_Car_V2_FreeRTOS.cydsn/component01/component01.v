@@ -15,7 +15,7 @@
 // Generated on 10/14/2020 at 19:29
 // Component: component01
 module component01 (RPM_Out, Reset_Out, Clock, Pulse_In, Reset);
-    output reg [7:0] RPM_Out = 8'b0,
+    output reg [7:0] RPM_Out,
     output reg Reset_Out,
     input      Clock,
     input      Pulse_In,
